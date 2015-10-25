@@ -17,8 +17,8 @@ import com.hideto0710.scalack.models._
 
 import JsonProtocol._
 
-object Client {
-  case class Slack(token: String)
+object Scalack {
+  case class Auth(token: String)
 
   private type Pipeline[A] = (HttpRequest) => Future[A]
   private val ApiUrl = "https://slack.com/api/"
@@ -99,7 +99,7 @@ object Client {
 
   private def makeUri(resource: String, queryParams: (String, Any)*): Uri = {
     val resourceUri = Uri(ApiUrl + resource)
-    resourceUri withQuery Client.cleanMap(queryParams.toMap)
+    resourceUri withQuery Scalack.cleanMap(queryParams.toMap)
   }
 
   /**
@@ -107,9 +107,9 @@ object Client {
    * @param excludeArchived アーカイブチャネルの排除フラグ
    * @return channel.listのFuture
    */
-  def listChannels(excludeArchived: Int = 0)(implicit s:Slack): Future[ChannelChunk] = {
-    val requestUri = makeUri("channels.list", "token" -> s.token, "exclude_archived" -> excludeArchived)
-    Client.get[ChannelChunk](
+  def listChannels(excludeArchived: Int = 0)(implicit a:Auth): Future[ChannelChunk] = {
+    val requestUri = makeUri("channels.list", "token" -> a.token, "exclude_archived" -> excludeArchived)
+    Scalack.get[ChannelChunk](
       sendReceive ~> unmarshal[ChannelChunk],
       requestUri
     )
@@ -130,12 +130,12 @@ object Client {
     oldest: Option[Long] = None,
     inclusive: Option[Int] = None,
     count: Option[Int] = None
-  )(implicit s:Slack): Future[HistoryChunk] = {
+  )(implicit a:Auth): Future[HistoryChunk] = {
     val requestUri = makeUri(
-      "channels.history", "token" -> s.token,
+      "channels.history", "token" -> a.token,
       "channel" -> channel, "latest" -> latest, "oldest" -> oldest, "inclusive" -> inclusive, "count" -> count
     )
-    Client.get[HistoryChunk](
+    Scalack.get[HistoryChunk](
       sendReceive ~> unmarshal[HistoryChunk],
       requestUri
     )
