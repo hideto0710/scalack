@@ -67,15 +67,18 @@ object Scalack {
 
   /**
    * Noneを排除し、valueをStringに変換したMapを返す。
-   * @param map Noneを含んだMap
+   * @param argMap Noneを含んだMap
    * @return Noneが排除されたMap
    * @todo Someでラップしなくても良い方法を検討する。
    */
-  private def cleanMap(map: Map[String, Any]): Map[String, String] = {
-    map.map {
+  private def cleanMap(argMap: Map[String, Any]): Map[String, String] = {
+    argMap.map {
       case (k, None) => (k, None)
+      case (k, Some(v)) => (k, Some(v.toString))
       case (k, v) => (k, Some(v.toString))
-    }.collect { case (k, Some(v)) => (k, v) }
+    }.collect {
+      case (k, Some(v)) => (k, v)
+    }
   }
 
   /**
