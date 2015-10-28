@@ -10,7 +10,7 @@ object ListChannels {
   ) {
 
     private def get(implicit a:Auth) = {
-      Scalack.listChannels(Scalack.makeUri(
+      Scalack._listChannels(Scalack.makeUri(
         "channels.list",
         "token" -> a.token,
         "exclude_archived" -> _excludeArchived

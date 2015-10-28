@@ -1,5 +1,7 @@
 package com.hideto0710.scalack
 
+import com.hideto0710.scalack.builders._
+
 import scala.annotation.tailrec
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -82,7 +84,10 @@ object Scalack {
 
   def systemShutdown() = system.shutdown()
 
-  def listChannels(uri: Uri) = get[ChannelChunk](sendReceive ~> unmarshal[ChannelChunk], uri)
-  def channelsHistory(uri: Uri) = get[HistoryChunk](sendReceive ~> unmarshal[HistoryChunk], uri)
+  val listChannels = ListChannels.builder
+  val channelsHistory = ChannelsHistory.builder
+
+  def _listChannels(uri: Uri) = get[ChannelChunk](sendReceive ~> unmarshal[ChannelChunk], uri)
+  def _channelsHistory(uri: Uri) = get[HistoryChunk](sendReceive ~> unmarshal[HistoryChunk], uri)
 
 }

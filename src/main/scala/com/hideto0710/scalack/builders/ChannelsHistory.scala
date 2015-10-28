@@ -14,7 +14,7 @@ object ChannelsHistory {
   ) {
 
     private def get(implicit a:Auth) = {
-      Scalack.channelsHistory(Scalack.makeUri(
+      Scalack._channelsHistory(Scalack.makeUri(
         "channels.history",
         "token" -> a.token,
         "channel" -> _channel,
