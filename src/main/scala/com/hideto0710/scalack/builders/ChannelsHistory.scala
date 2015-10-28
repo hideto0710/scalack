@@ -12,15 +12,27 @@ object ChannelsHistory {
     _inclusive: Option[Int],
     _count: Option[Int]
   ) {
+
+    private def get(implicit a:Auth) = {
+      Scalack.channelsHistory(Scalack.makeUri(
+        "channels.history",
+        "token" -> a.token,
+        "channel" -> _channel,
+        "latest" -> _latest,
+        "oldest" -> _oldest,
+        "inclusive" -> _inclusive,
+        "count" -> _count
+      ))
+    }
+
     def channel(channel: String) = this.copy(_channel = Some(channel))
+    def latest(latest: Long) = this.copy(_latest = Some(latest))
+    def oldest(oldest: Long) = this.copy(_oldest = Some(oldest))
+    def inclusive(inclusive: Int) = this.copy(_inclusive = Some(inclusive))
     def count(count: Int) = this.copy(_count = Some(count))
 
-    def executeSync(implicit a:Auth) = {
-      Scalack.syncRequest(Scalack.channelsHistory(_channel.get, _latest, _oldest, _inclusive, _count), 0)
-    }
-    def execute(implicit a:Auth) = {
-      Scalack.channelsHistory(_channel.get, _latest, _oldest, _inclusive, _count)
-    }
+    def syncExecute(implicit a:Auth) = Scalack.syncRequest(get)
+    def execute(implicit a:Auth) = get
   }
 
   val builder = Builder(None, None, None, None, None)
