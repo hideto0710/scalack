@@ -8,6 +8,6 @@ object Hello {
   val logger = Logger(LoggerFactory.getLogger("Hello"))
 
   def main(args: Array[String]) = {
-    logger.debug("main")
+    logger.debug("hello")
   }
 }
