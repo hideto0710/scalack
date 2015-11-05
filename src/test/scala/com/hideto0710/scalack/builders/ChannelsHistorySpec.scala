@@ -23,12 +23,12 @@ class ChannelsHistorySpec extends FlatSpec() with Matchers {
     s._count.get should be (1)
   }
 
-  it should "be not able to get channel history because of toke" in {
+  /*it should "be not able to get channel history because of toke" in {
     val f = Scalack.channelsHistory.channel("general").count(1).execute(Auth("v"))
     val result = Await.result(f, Duration.Inf)
     result.ok should be (right = false)
     result.error.get should be ("invalid_auth")
-  }
+  }*/
 
   // MARK: To check builder is immutable
   val builder = Scalack.channelsHistory
