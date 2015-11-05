@@ -1,10 +1,10 @@
 package com.hideto0710.scalack.models
 
 /**
- * channelの項目毎の詳細情報
- * @param value 項目に関する情報
- * @param creator 更新者
- * @param last_set 更新日時
+ * channel information
+ * @param value detail of this information.
+ * @param creator the user ID of the member that update this information.
+ * @param last_set a unix timestamp.
  */
 case class ChannelValue(
   value: String,

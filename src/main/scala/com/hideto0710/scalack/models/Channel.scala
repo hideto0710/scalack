@@ -1,19 +1,19 @@
 package com.hideto0710.scalack.models
 
 /**
- * channelの情報
+ * channel
  * @param id ID
- * @param name 名前
- * @param created 作成日時（UNIX時刻）
- * @param creator 作成者
- * @param members 参加メンバー
- * @param num_members 参加メンバー数
- * @param is_channel チャネルであるか
- * @param is_archived アーカイブされているか
- * @param is_general generalであるか
- * @param is_member 自身がメンバーであるか
- * @param topic トピック
- * @param purpose 目的
+ * @param name the name of the channel.
+ * @param created a unix timestamp.
+ * @param creator the user ID of the member that created this channel.
+ * @param members a list of user ids for all users in this channel.
+ * @param num_members a number of members.
+ * @param is_channel will be true if this is channel.
+ * @param is_archived will be true if the channel is archived.
+ * @param is_general will be true if this channel is the "general" channel that includes all regular team members.
+ * @param is_member will be true if the calling member is part of the channel.
+ * @param topic information about the channel topic.
+ * @param purpose information about the channel purpose
  */
 case class Channel(
   id: String,
